@@ -20,7 +20,7 @@ public class Main {
         AddCollection addCollection = new AddCollection();
         AddRemoveCollection addRemoveCollection = new AddRemoveCollection();
         MyCollection myCollection = new MyCollection();
-a
+
         System.out.println(addElements(addCollection, strings));
         System.out.println(addElements(addRemoveCollection, strings));
         System.out.println(addElements(myCollection, strings));
