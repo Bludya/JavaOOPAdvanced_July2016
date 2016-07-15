@@ -1,5 +1,6 @@
 package BashSoft.bg.softuni;
 
+import BashSoft.bg.softuni.contracts.*;
 import BashSoft.bg.softuni.io.CommandInterpreter;
 import BashSoft.bg.softuni.io.IOManager;
 import BashSoft.bg.softuni.io.InputReader;
@@ -13,15 +14,15 @@ import BashSoft.bg.softuni.repository.StudentsRepository;
 public class Main {
 
     public static void main(String[] args) {
-        Tester tester = new Tester();
-        DownloadManager downloadManager = new DownloadManager();
+        ContentComparer tester = new Tester();
+        AsynchDownloader downloadManager = new DownloadManager();
         IOManager ioManager = new IOManager();
-        RepositorySorter sorter = new RepositorySorter();
-        RepositoryFilter filter = new RepositoryFilter();
-        StudentsRepository repository = new StudentsRepository(filter, sorter);
-        CommandInterpreter currentInterpreter = new CommandInterpreter(
+        DataSorter sorter = new RepositorySorter();
+        DataFilter filter = new RepositoryFilter();
+        Database repository = new StudentsRepository(filter, sorter);
+        Interpreter currentInterpreter = new CommandInterpreter(
                 tester, repository, downloadManager, ioManager);
-        InputReader reader = new InputReader(currentInterpreter);
+        Reader reader = new InputReader(currentInterpreter);
 
         try {
             reader.readCommands();

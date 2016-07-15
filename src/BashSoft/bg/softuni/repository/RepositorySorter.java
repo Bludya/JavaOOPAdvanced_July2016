@@ -1,12 +1,13 @@
 package BashSoft.bg.softuni.repository;
 
+import BashSoft.bg.softuni.contracts.DataSorter;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RepositorySorter {
+public class RepositorySorter implements DataSorter{
 
     public void printSortedStudents(
             HashMap<String, Double> courseData,

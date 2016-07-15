@@ -1,7 +1,7 @@
 package BashSoft.bg.softuni.io.commands;
 
+import BashSoft.bg.softuni.contracts.*;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
-import BashSoft.bg.softuni.io.IOManager;
 import BashSoft.bg.softuni.judge.Tester;
 import BashSoft.bg.softuni.network.DownloadManager;
 import BashSoft.bg.softuni.repository.StudentsRepository;
@@ -10,10 +10,10 @@ public class DownloadFileCommand extends Command {
 
     public DownloadFileCommand(String input,
                                String[] data,
-                               Tester tester,
-                               StudentsRepository repository,
-                               DownloadManager downloadManager,
-                               IOManager ioManager) {
+                               ContentComparer tester,
+                               Database repository,
+                               AsynchDownloader downloadManager,
+                               DirectoryManager ioManager) {
         super(input, data, tester, repository, downloadManager, ioManager);
     }
 

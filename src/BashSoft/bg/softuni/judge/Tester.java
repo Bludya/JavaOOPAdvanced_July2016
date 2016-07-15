@@ -1,5 +1,6 @@
 package BashSoft.bg.softuni.judge;
 
+import BashSoft.bg.softuni.contracts.ContentComparer;
 import BashSoft.bg.softuni.exceptions.InvalidPathException;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
@@ -8,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tester {
+public class Tester implements ContentComparer{
 
     public void compareContent(
             String actualOutput,

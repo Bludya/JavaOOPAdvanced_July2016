@@ -1,8 +1,9 @@
 package BashSoft.bg.softuni.repository;
 
+import BashSoft.bg.softuni.contracts.*;
 import BashSoft.bg.softuni.io.OutputWriter;
-import BashSoft.bg.softuni.models.Course;
-import BashSoft.bg.softuni.models.Student;
+import BashSoft.bg.softuni.models.SoftUniCourse;
+import BashSoft.bg.softuni.models.SoftUniStudent;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 import BashSoft.bg.softuni.staticData.SessionData;
 
@@ -16,17 +17,21 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StudentsRepository {
+public class StudentsRepository implements
+        Database,
+        Requester,
+        FilteredTaker,
+        OrderedTaker{
 
     private LinkedHashMap<String, Course> courses;
     private LinkedHashMap<String, Student> students;
     private boolean isDataInitialized;
-    private RepositoryFilter filter;
-    private RepositorySorter sorter;
+    private DataFilter filter;
+    private DataSorter sorter;
 
     public StudentsRepository(
-            RepositoryFilter filter,
-            RepositorySorter sorter) {
+            DataFilter filter,
+            DataSorter sorter) {
         this.filter = filter;
         this.sorter = sorter;
     }
@@ -77,22 +82,22 @@ public class StudentsRepository {
                                 ExceptionMessages.INVALID_SCORE);
                         continue;
                     }
-                    if (scores.length > Course.NUMBER_OF_TASKS_ON_EXAM) {
+                    if (scores.length > SoftUniCourse.NUMBER_OF_TASKS_ON_EXAM) {
                         OutputWriter.displayException(
                                 ExceptionMessages.INVALID_NUMBER_OF_SCORES);
                         continue;
                     }
                     if (!this.students.containsKey(studentName)) {
-                        this.students.put(studentName, new Student(studentName));
+                        this.students.put(studentName, new SoftUniStudent(studentName));
                     }
                     if (!this.courses.containsKey(courseName)) {
-                        this.courses.put(courseName, new Course(courseName));
+                        this.courses.put(courseName, new SoftUniCourse(courseName));
                     }
-                    Course course = this.courses.get(courseName);
-                    Student student = this.students.get(studentName);
-                    student.enrollInCourse(course);
-                    student.setMarkOnCourse(courseName, scores);
-                    course.enrollStudent(student);
+                    Course softUniCourse = this.courses.get(courseName);
+                    Student softUniStudent = this.students.get(studentName);
+                    softUniStudent.enrollInCourse(softUniCourse);
+                    softUniStudent.setMarkOnCourse(courseName, scores);
+                    softUniCourse.enrollStudent(softUniStudent);
                 } catch (NumberFormatException nfe) {
                     OutputWriter.displayException(nfe.getMessage() + " at line: " + lineIndex);
                 }

@@ -1,5 +1,7 @@
 package BashSoft.bg.softuni.network;
 
+import BashSoft.bg.softuni.contracts.AsynchDownloader;
+import BashSoft.bg.softuni.contracts.Downloader;
 import BashSoft.bg.softuni.exceptions.InvalidPathException;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.staticData.SessionData;
@@ -12,7 +14,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-public class DownloadManager {
+public class DownloadManager implements AsynchDownloader{
 
     public void download(String fileUrl) {
         URL url;

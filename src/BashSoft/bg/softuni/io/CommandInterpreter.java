@@ -1,24 +1,24 @@
 package BashSoft.bg.softuni.io;
 
+import BashSoft.bg.softuni.contracts.*;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.commands.*;
-import BashSoft.bg.softuni.judge.Tester;
 import BashSoft.bg.softuni.network.DownloadManager;
 import BashSoft.bg.softuni.repository.StudentsRepository;
 
 import java.io.IOException;
 
-public class CommandInterpreter {
+public class CommandInterpreter implements Interpreter{
 
-    private Tester tester;
-    private StudentsRepository repository;
-    private DownloadManager downloadManager;
-    private IOManager ioManager;
+    private ContentComparer tester;
+    private Database repository;
+    private AsynchDownloader downloadManager;
+    private DirectoryManager ioManager;
 
-    public CommandInterpreter(Tester tester,
-                              StudentsRepository repository,
-                              DownloadManager downloadManager,
-                              IOManager ioManager) {
+    public CommandInterpreter(ContentComparer tester,
+                              Database repository,
+                              AsynchDownloader downloadManager,
+                              DirectoryManager ioManager) {
         this.tester = tester;
         this.repository = repository;
         this.downloadManager = downloadManager;
@@ -29,14 +29,14 @@ public class CommandInterpreter {
         String[] data = input.split("\\s+");
         String commandName = data[0].toLowerCase();
         try {
-            Command command = parseCommand(input, data, commandName);
+            Executable command = parseCommand(input, data, commandName);
             command.execute();
         } catch (Exception ex) {
             OutputWriter.displayException(ex.getMessage());
         }
     }
 
-    private Command parseCommand(String input, String[] data, String command) {
+    private Executable parseCommand(String input, String[] data, String command) {
         switch (command) {
             case "open":
                 return new OpenFileCommand(input, data, this.tester,

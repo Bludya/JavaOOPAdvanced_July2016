@@ -1,12 +1,13 @@
 package BashSoft.bg.softuni.repository;
 
+import BashSoft.bg.softuni.contracts.DataFilter;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 
 import java.util.HashMap;
 import java.util.function.Predicate;
 
-public class RepositoryFilter {
+public class RepositoryFilter implements DataFilter {
 
     public void printFilteredStudents(
             HashMap<String, Double> studentsWithMarks,

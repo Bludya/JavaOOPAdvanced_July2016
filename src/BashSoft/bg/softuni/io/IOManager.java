@@ -1,5 +1,6 @@
 package BashSoft.bg.softuni.io;
 
+import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidFileNameException;
 import BashSoft.bg.softuni.exceptions.InvalidPathException;
 import BashSoft.bg.softuni.staticData.SessionData;
@@ -8,7 +9,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class IOManager {
+public class IOManager implements DirectoryManager{
 
     public void traverseDirectory(int depth) {
         Queue<File> subFolders = new LinkedList<>();

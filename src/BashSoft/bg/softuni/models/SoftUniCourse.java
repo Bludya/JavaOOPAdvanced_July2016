@@ -1,5 +1,7 @@
 package BashSoft.bg.softuni.models;
 
+import BashSoft.bg.softuni.contracts.Course;
+import BashSoft.bg.softuni.contracts.Student;
 import BashSoft.bg.softuni.exceptions.DuplicateEntryInStructureException;
 import BashSoft.bg.softuni.exceptions.InvalidStringException;
 
@@ -7,7 +9,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Course {
+public class SoftUniCourse implements Course{
 
     public static final int NUMBER_OF_TASKS_ON_EXAM = 5;
     public static final int MAX_SCORE_ON_EXAM_TASK = 100;
@@ -15,7 +17,7 @@ public class Course {
     private String name;
     private LinkedHashMap<String, Student> studentsByName;
 
-    public Course(String name) {
+    public SoftUniCourse(String name) {
         this.setName(name);
         this.studentsByName = new LinkedHashMap<>();
     }
@@ -35,12 +37,12 @@ public class Course {
         return Collections.unmodifiableMap(this.studentsByName);
     }
 
-    public void enrollStudent(Student student) {
-        if (this.studentsByName.containsKey(student.getUserName())) {
+    public void enrollStudent(Student softUniStudent) {
+        if (this.studentsByName.containsKey(softUniStudent.getUserName())) {
             throw new DuplicateEntryInStructureException(
-                    student.getUserName(), this.name);
+                    softUniStudent.getUserName(), this.name);
         }
 
-        this.studentsByName.put(student.getUserName(), student);
+        this.studentsByName.put(softUniStudent.getUserName(), softUniStudent);
     }
 }

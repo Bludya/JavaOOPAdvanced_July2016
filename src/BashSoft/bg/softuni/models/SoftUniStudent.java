@@ -1,5 +1,7 @@
 package BashSoft.bg.softuni.models;
 
+import BashSoft.bg.softuni.contracts.Course;
+import BashSoft.bg.softuni.contracts.Student;
 import BashSoft.bg.softuni.exceptions.DuplicateEntryInStructureException;
 import BashSoft.bg.softuni.exceptions.InvalidStringException;
 import BashSoft.bg.softuni.exceptions.KeyNotFoundException;
@@ -10,12 +12,12 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Student {
+public class SoftUniStudent implements Student{
     private String userName;
     private LinkedHashMap<String, Course> enrolledCourses;
     private LinkedHashMap<String, Double> marksByCourseName;
 
-    public Student(String userName) {
+    public SoftUniStudent(String userName) {
         this.setUserName(userName);
         this.enrolledCourses = new LinkedHashMap<>();
         this.marksByCourseName = new LinkedHashMap<>();
@@ -40,13 +42,13 @@ public class Student {
         return Collections.unmodifiableMap(marksByCourseName);
     }
 
-    public void enrollInCourse(Course course) {
-        if (this.enrolledCourses.containsKey(course.getName())) {
+    public void enrollInCourse(Course softUniCourse) {
+        if (this.enrolledCourses.containsKey(softUniCourse.getName())) {
             throw new DuplicateEntryInStructureException(
-                    this.userName, course.getName());
+                    this.userName, softUniCourse.getName());
         }
 
-        this.enrolledCourses.put(course.getName(), course);
+        this.enrolledCourses.put(softUniCourse.getName(), softUniCourse);
     }
 
     public void setMarkOnCourse(String courseName, int[] scores) {
@@ -54,7 +56,7 @@ public class Student {
             throw new KeyNotFoundException();
         }
 
-        if (scores.length > Course.NUMBER_OF_TASKS_ON_EXAM) {
+        if (scores.length > SoftUniCourse.NUMBER_OF_TASKS_ON_EXAM) {
             throw new IllegalArgumentException(
                     ExceptionMessages.INVALID_NUMBER_OF_SCORES);
         }
@@ -65,7 +67,7 @@ public class Student {
 
     private double calculateMark(int[] scores) {
         double percentageOfSolvedExam = Arrays.stream(scores).sum() /
-                (double) (Course.NUMBER_OF_TASKS_ON_EXAM * Course.MAX_SCORE_ON_EXAM_TASK);
+                (double) (SoftUniCourse.NUMBER_OF_TASKS_ON_EXAM * SoftUniCourse.MAX_SCORE_ON_EXAM_TASK);
         double mark = percentageOfSolvedExam * 4 + 2;
         return mark;
     }
