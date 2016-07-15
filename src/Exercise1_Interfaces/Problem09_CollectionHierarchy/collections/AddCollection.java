@@ -27,6 +27,6 @@ public class AddCollection implements Addable {
     @Override
     public int add(String string) {
         this.getCollection().add(string);
-        return this.getCollection().indexOf(string);
+        return this.getCollection().size() - 1;
     }
 }

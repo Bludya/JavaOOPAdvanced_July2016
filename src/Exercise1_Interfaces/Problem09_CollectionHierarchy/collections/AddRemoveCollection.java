@@ -22,7 +22,7 @@ public class AddRemoveCollection extends AddCollection implements Removable {
     @Override
     public int add(String string){
         super.getCollection().add(0, string);
-        return super.getCollection().indexOf(string);
+        return 0;
     }
 
     @Override
