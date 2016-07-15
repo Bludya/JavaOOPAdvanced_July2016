@@ -7,7 +7,7 @@ import BashSoft.bg.softuni.staticData.ExceptionMessages;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RepositorySorter implements DataSorter{
+public class RepositorySorter implements DataSorter {
 
     public void printSortedStudents(
             HashMap<String, Double> courseData,

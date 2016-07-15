@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SoftUniCourse implements Course{
+public class SoftUniCourse implements Course {
 
     public static final int NUMBER_OF_TASKS_ON_EXAM = 5;
     public static final int MAX_SCORE_ON_EXAM_TASK = 100;

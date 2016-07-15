@@ -7,5 +7,5 @@ package BashSoft.bg.softuni.contracts;
 public interface DirectoryManager extends
         DirectoryChanger,
         DirectoryCreator,
-        DirectoryTraverser  {
+        DirectoryTraverser {
 }

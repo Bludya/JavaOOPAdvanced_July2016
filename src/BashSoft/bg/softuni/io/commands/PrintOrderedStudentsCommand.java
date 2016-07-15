@@ -1,11 +1,11 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.*;
+import BashSoft.bg.softuni.contracts.AsynchDownloader;
+import BashSoft.bg.softuni.contracts.ContentComparer;
+import BashSoft.bg.softuni.contracts.Database;
+import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.OutputWriter;
-import BashSoft.bg.softuni.judge.Tester;
-import BashSoft.bg.softuni.network.DownloadManager;
-import BashSoft.bg.softuni.repository.StudentsRepository;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 
 public class PrintOrderedStudentsCommand extends Command {

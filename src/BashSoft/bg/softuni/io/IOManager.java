@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class IOManager implements DirectoryManager{
+public class IOManager implements DirectoryManager {
 
     public void traverseDirectory(int depth) {
         Queue<File> subFolders = new LinkedList<>();

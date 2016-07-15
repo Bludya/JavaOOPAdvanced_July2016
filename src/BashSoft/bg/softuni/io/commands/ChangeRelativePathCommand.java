@@ -1,10 +1,10 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.*;
+import BashSoft.bg.softuni.contracts.AsynchDownloader;
+import BashSoft.bg.softuni.contracts.ContentComparer;
+import BashSoft.bg.softuni.contracts.Database;
+import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
-import BashSoft.bg.softuni.judge.Tester;
-import BashSoft.bg.softuni.network.DownloadManager;
-import BashSoft.bg.softuni.repository.StudentsRepository;
 
 public class ChangeRelativePathCommand extends Command {
 

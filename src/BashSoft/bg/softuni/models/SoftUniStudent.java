@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SoftUniStudent implements Student{
+public class SoftUniStudent implements Student {
     private String userName;
     private LinkedHashMap<String, Course> enrolledCourses;
     private LinkedHashMap<String, Double> marksByCourseName;

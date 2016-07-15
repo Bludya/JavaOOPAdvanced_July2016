@@ -7,7 +7,7 @@ import BashSoft.bg.softuni.staticData.SessionData;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class InputReader implements Reader{
+public class InputReader implements Reader {
 
     private static final String END_COMMAND = "quit";
 

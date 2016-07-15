@@ -3,12 +3,10 @@ package BashSoft.bg.softuni.io;
 import BashSoft.bg.softuni.contracts.*;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.commands.*;
-import BashSoft.bg.softuni.network.DownloadManager;
-import BashSoft.bg.softuni.repository.StudentsRepository;
 
 import java.io.IOException;
 
-public class CommandInterpreter implements Interpreter{
+public class CommandInterpreter implements Interpreter {
 
     private ContentComparer tester;
     private Database repository;

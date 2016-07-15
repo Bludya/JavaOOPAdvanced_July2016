@@ -21,7 +21,7 @@ public class StudentsRepository implements
         Database,
         Requester,
         FilteredTaker,
-        OrderedTaker{
+        OrderedTaker {
 
     private LinkedHashMap<String, Course> courses;
     private LinkedHashMap<String, Student> students;
