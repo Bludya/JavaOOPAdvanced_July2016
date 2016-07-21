@@ -1,6 +1,7 @@
 package Exercise2_Generics.Problem07_CustomList.models;
 
 import Exercise2_Generics.Problem07_CustomList.interfaces.CustomList;
+import Exercise2_Generics.Problem07_CustomList.interfaces.Sorter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +15,14 @@ import java.util.function.Consumer;
  */
 public class MyList<T extends Comparable<T>> implements CustomList<T>, Iterable<T> {
     private List<T> list;
+    private Sorter<T> mySort;
 
     public MyList() {
         this.setList(new ArrayList<>());
+        this.mySort = new SorterImpl<>();
     }
 
-    public List<T> getList() {
+    private List<T> getList() {
         return list;
     }
 
@@ -71,6 +74,11 @@ public class MyList<T extends Comparable<T>> implements CustomList<T>, Iterable<
     @Override
     public T getMin() {
         return this.getList().stream().min(Comparable::compareTo).get();
+    }
+
+    @Override
+    public void sort() {
+        mySort.sort(this.getList());
     }
 
     @Override

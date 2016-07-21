@@ -1,9 +1,9 @@
 package Exercise2_Generics.Problem07_CustomList.models;
 
-import Exercise2_Generics.Problem07_CustomList.interfaces.CustomList;
 import Exercise2_Generics.Problem07_CustomList.interfaces.Sorter;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by bludya on 7/21/16.
@@ -15,7 +15,7 @@ public class SorterImpl<T extends Comparable<T>> implements Sorter<T> {
     }
 
     @Override
-    public void sort(CustomList<T> myList) {
-        Collections.sort(myList.getList());
+    public void sort(List<T> myList) {
+        Collections.sort(myList);
     }
 }

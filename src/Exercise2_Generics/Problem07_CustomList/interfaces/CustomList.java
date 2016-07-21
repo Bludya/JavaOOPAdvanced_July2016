@@ -1,7 +1,5 @@
 package Exercise2_Generics.Problem07_CustomList.interfaces;
 
-import java.util.List;
-
 /**
  * Created by bludya on 7/20/16.
  * All rights reserved!
@@ -22,5 +20,5 @@ public interface CustomList<T> extends Iterable<T> {
 
     T getMin();
 
-    List<T> getList();
+    void sort();
 }

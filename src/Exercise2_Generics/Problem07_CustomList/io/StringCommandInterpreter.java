@@ -23,7 +23,7 @@ public class StringCommandInterpreter extends CommandInterpreterImpl<String> {
                 String string = input[1];
                 return new AddCommand<>(string, super.getIoManager(), super.getMyList());
             case "Remove":
-                int index = Integer.parseInt(input[2]);
+                int index = Integer.parseInt(input[1]);
                 return new RemoveCommand<>(index, super.getMyList(), super.getIoManager());
             case "Contains":
                 String text = input[1];
