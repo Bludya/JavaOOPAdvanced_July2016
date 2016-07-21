@@ -2,7 +2,6 @@ package Exercise1_Interfaces.Problem08_MilitaryElite.soldiers;
 
 import Exercise1_Interfaces.Problem08_MilitaryElite.interfaces.soldiers.ILeutenantGeneral;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

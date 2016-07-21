@@ -1,4 +1,4 @@
-package Exercise2_Generics.Problem05_GenericCountMethodString;
+package Exercise2_Generics.Problem06_GenericCountMethodDoubles;
 
 
 import java.io.BufferedReader;
@@ -14,18 +14,18 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        List<String> elements = new ArrayList<>();
+        List<Double> elements = new ArrayList<>();
 
         int n = Integer.parseInt(reader.readLine());
 
         for (int i = 0; i < n; i++) {
-            String word = reader.readLine();
-            elements.add(word);
+            Double number = Double.parseDouble(reader.readLine());
+            elements.add(number);
         }
 
-        String wordToCheck = reader.readLine();
+        Double number = Double.parseDouble(reader.readLine());
 
-        long count = compare(elements, wordToCheck);
+        long count = compare(elements, number);
 
         System.out.println(count);
     }
