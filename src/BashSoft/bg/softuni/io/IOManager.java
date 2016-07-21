@@ -10,12 +10,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class IOManager implements DirectoryManager {
+    //in order to work in linux...
+    private static final String spliter = File.separator;
 
     public void traverseDirectory(int depth) {
         Queue<File> subFolders = new LinkedList<>();
 
         String path = SessionData.currentPath;
-        int initialIndentation = path.split("\\\\").length;
+
+        int initialIndentation = path.split(spliter).length;
 
         File root = new File(path);
 
@@ -23,7 +26,7 @@ public class IOManager implements DirectoryManager {
 
         while (subFolders.size() != 0) {
             File currentFolder = subFolders.poll();
-            int currentIndentation = currentFolder.toString().split("\\\\").length - initialIndentation;
+            int currentIndentation = currentFolder.toString().split(spliter).length - initialIndentation;
 
             if (depth - currentIndentation < 0) {
                 break;
@@ -36,7 +39,7 @@ public class IOManager implements DirectoryManager {
                     if (file.isDirectory()) {
                         subFolders.add(file);
                     } else {
-                        int indexOfLastSlash = file.toString().lastIndexOf("\\");
+                        int indexOfLastSlash = file.toString().lastIndexOf(spliter);
                         for (int i = 0; i < indexOfLastSlash; i++) {
                             OutputWriter.writeMessage("-");
                         }
@@ -49,7 +52,7 @@ public class IOManager implements DirectoryManager {
     }
 
     public void createDirectoryInCurrentFolder(String name) {
-        String path = SessionData.currentPath + "\\" + name;
+        String path = SessionData.currentPath + spliter + name;
         File file = new File(path);
         boolean wasDirMade = file.mkdir();
         if (!wasDirMade) {
@@ -62,7 +65,7 @@ public class IOManager implements DirectoryManager {
             // go one directory up
             try {
                 String currentPath = SessionData.currentPath;
-                int indexOfLastSlash = currentPath.lastIndexOf("\\");
+                int indexOfLastSlash = currentPath.lastIndexOf(spliter);
                 String newPath = currentPath.substring(0, indexOfLastSlash);
                 SessionData.currentPath = newPath;
             } catch (StringIndexOutOfBoundsException sioobe) {
@@ -71,7 +74,7 @@ public class IOManager implements DirectoryManager {
         } else {
             // go to a given directory
             String currentPath = SessionData.currentPath;
-            currentPath += "\\" + relativePath;
+            currentPath += spliter + relativePath;
             changeCurrentDirAbsolute(currentPath);
         }
     }

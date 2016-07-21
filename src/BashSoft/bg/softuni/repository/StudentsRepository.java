@@ -1,19 +1,18 @@
 package BashSoft.bg.softuni.repository;
 
 import BashSoft.bg.softuni.contracts.*;
+import BashSoft.bg.softuni.datStructures.SimpleSortedList;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.models.SoftUniCourse;
 import BashSoft.bg.softuni.models.SoftUniStudent;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 import BashSoft.bg.softuni.staticData.SessionData;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,7 +60,7 @@ public class StudentsRepository implements
         String regex = "([A-Z][a-zA-Z#\\+]*_[A-Z][a-z]{2}_\\d{4})\\s+([A-Za-z]+\\d{2}_\\d{2,4})\\s([\\s0-9]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher;
-        String path = SessionData.currentPath + "\\" + fileName;
+        String path = SessionData.currentPath + File.separator + fileName;
         List<String> lines = Files.readAllLines(Paths.get(path));
         for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
             String line = lines.get(lineIndex);
@@ -126,6 +125,25 @@ public class StudentsRepository implements
                 this.courses.get(courseName).getStudentsByName().entrySet()) {
             this.getStudentMarkInCourse(courseName, student.getKey());
         }
+    }
+
+    @Override
+    public SimpleSortedList<Course> getAllCoursesSorted(Comparator<Course> cmp) {
+        SimpleSortedList<Course> courseSortedList =
+                new SimpleSortedList<>(Course.class, cmp);
+
+        courseSortedList.addAll(this.courses.values());
+
+        return courseSortedList;
+    }
+
+    @Override
+    public SimpleSortedList<Student> getAllStudentsSorted(Comparator<Student> cmp) {
+        SimpleSortedList<Student> studentSortedList =
+                new SimpleSortedList<>(Student.class, cmp);
+
+        studentSortedList.addAll(this.students.values());
+        return studentSortedList;
     }
 
     private boolean isQueryForCoursePossible(String courseName) {
