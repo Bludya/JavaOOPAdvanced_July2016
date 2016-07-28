@@ -94,7 +94,7 @@ public class PetClinic implements Clinic<Pet> {
     public String toString() {
         StringBuilder output = new StringBuilder();
 
-        for (int i = this.roomCount - 1; i >= 0; i--) {
+        for (int i = 0; i < this.roomCount; i++) {
             Pet pet = rooms[i];
             if (pet == null) {
                 output.append("null");
@@ -149,11 +149,11 @@ public class PetClinic implements Clinic<Pet> {
         public Pet next() {
             if (isLeftTraversed) {
                 isLeftTraversed = false;
-                this.index = middle + count;
+                this.index = middle - count;
                 return rooms[this.index];
             } else {
                 isLeftTraversed = true;
-                this.index = middle - count++;
+                this.index = middle + count++;
                 return rooms[this.index];
             }
         }
