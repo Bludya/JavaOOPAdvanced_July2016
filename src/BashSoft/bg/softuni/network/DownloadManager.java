@@ -21,7 +21,7 @@ public class DownloadManager implements AsynchDownloader {
         FileOutputStream fos = null;
 
         try {
-            if (Thread.currentThread().getName().equals("main")) {
+            if (Thread.currentThread().getName().equals("Main")) {
                 OutputWriter.writeMessageOnNewLine("Started downloading..");
             }
 
@@ -32,7 +32,7 @@ public class DownloadManager implements AsynchDownloader {
             fos = new FileOutputStream(file);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
-            if (Thread.currentThread().getName().equals("main")) {
+            if (Thread.currentThread().getName().equals("Main")) {
                 OutputWriter.writeMessageOnNewLine("Download complete.");
             }
         } catch (MalformedURLException e) {
