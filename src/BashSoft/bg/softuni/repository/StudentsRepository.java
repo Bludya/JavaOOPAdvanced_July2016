@@ -1,7 +1,7 @@
 package BashSoft.bg.softuni.repository;
 
 import BashSoft.bg.softuni.contracts.*;
-import BashSoft.bg.softuni.datStructures.SimpleSortedList;
+import BashSoft.bg.softuni.dataStructures.SimpleSortedList;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.models.SoftUniCourse;
 import BashSoft.bg.softuni.models.SoftUniStudent;

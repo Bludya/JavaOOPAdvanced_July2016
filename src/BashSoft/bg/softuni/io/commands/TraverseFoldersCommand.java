@@ -1,20 +1,19 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
-import BashSoft.bg.softuni.contracts.Database;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 
+@Alias("ls")
 public class TraverseFoldersCommand extends Command {
 
+    @Inject
+    private DirectoryManager ioManager;
+
     public TraverseFoldersCommand(String input,
-                                  String[] data,
-                                  ContentComparer tester,
-                                  Database repository,
-                                  AsynchDownloader downloadManager,
-                                  DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                                  String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,10 +24,10 @@ public class TraverseFoldersCommand extends Command {
         }
 
         if (data.length == 1) {
-            this.getIoManager().traverseDirectory(0);
+            this.ioManager.traverseDirectory(0);
             return;
         }
 
-        this.getIoManager().traverseDirectory(Integer.valueOf(data[1]));
+        this.ioManager.traverseDirectory(Integer.valueOf(data[1]));
     }
 }

@@ -1,20 +1,18 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
-import BashSoft.bg.softuni.contracts.Database;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 
+@Alias("cdrel")
 public class ChangeRelativePathCommand extends Command {
 
-    public ChangeRelativePathCommand(String input,
-                                     String[] data,
-                                     ContentComparer tester,
-                                     Database repository,
-                                     AsynchDownloader downloadManager,
-                                     DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+    @Inject
+    private DirectoryManager ioManager;
+
+    public ChangeRelativePathCommand(String input, String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,6 +23,6 @@ public class ChangeRelativePathCommand extends Command {
         }
 
         String relativePath = data[1];
-        this.getIoManager().changeCurrentDirRelativePath(relativePath);
+        this.ioManager.changeCurrentDirRelativePath(relativePath);
     }
 }

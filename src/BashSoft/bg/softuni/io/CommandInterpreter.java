@@ -1,13 +1,25 @@
 package BashSoft.bg.softuni.io;
 
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.*;
-import BashSoft.bg.softuni.exceptions.InvalidInputException;
-import BashSoft.bg.softuni.io.commands.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 public class CommandInterpreter implements Interpreter {
 
+    private static final String SEPARATOR = File.separator;
+    private static final String COMMAND_PACKAGE = "BashSoft.bg.softuni.io.commands.";
+    private static final String COMMANDS_LOCATION =
+            "src" + SEPARATOR +
+                    "BashSoft" + SEPARATOR +
+                    "bg" + SEPARATOR +
+                    "softuni" + SEPARATOR +
+                    "io" + SEPARATOR +
+                    "commands";
     private ContentComparer tester;
     private Database repository;
     private AsynchDownloader downloadManager;
@@ -35,54 +47,59 @@ public class CommandInterpreter implements Interpreter {
     }
 
     private Executable parseCommand(String input, String[] data, String command) {
-        switch (command) {
-            case "open":
-                return new OpenFileCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "mkdir":
-                return new MakeDirectoryCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "ls":
-                return new TraverseFoldersCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "cmp":
-                return new CompareFilesCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "cdrel":
-                return new ChangeRelativePathCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "cdabs":
-                return new ChangeAbsolutePathCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "readdb":
-                return new ReadDatabaseCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "help":
-                return new GetHelpCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "show":
-                return new ShowCourseCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "filter":
-                return new PrintFilteredStudentsCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "order":
-                return new PrintOrderedStudentsCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "download":
-                return new DownloadFileCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "downloadasynch":
-                return new DownloadAsynchCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "dropdb":
-                return new DropDatabaseCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            case "display":
-                return new DisplayCommand(input, data, this.tester,
-                        this.repository, this.downloadManager, this.ioManager);
-            default:
-                throw new InvalidInputException(input);
+        File commandFolder = new File(COMMANDS_LOCATION);
+        Executable executable = null;
+        for (File file : commandFolder.listFiles()) {
+            if (!file.isFile() || !file.getName().endsWith(".java")) {
+                continue;
+            }
+
+            try {
+                String className = file.getName().substring(0, file.getName().lastIndexOf("."));
+                Class<Executable> exeClass = (Class<Executable>) Class.forName(COMMAND_PACKAGE + className);
+
+                if (!exeClass.isAnnotationPresent(Alias.class)) {
+                    continue;
+                }
+
+                Alias alias = exeClass.getAnnotation(Alias.class);
+                String value = alias.value();
+                if (!value.equalsIgnoreCase(command)) {
+                    continue;
+                }
+
+                Constructor exeCtor = exeClass.getConstructor(String.class, String[].class);
+                executable = (Executable) exeCtor.newInstance(input, data);
+                this.injectDependancies(executable, exeClass);
+            } catch (ReflectiveOperationException roe) {
+                roe.printStackTrace();
+            }
+
         }
+
+        return executable;
+    }
+
+    private void injectDependancies(Executable executable,
+                                    Class<Executable> exeClass) throws ReflectiveOperationException {
+
+        Field[] exeField = exeClass.getDeclaredFields();
+        for (Field fieldToSet : exeField) {
+            if (!fieldToSet.isAnnotationPresent(Inject.class)) {
+                continue;
+            }
+            fieldToSet.setAccessible(true);
+
+            Field[] theseFields = CommandInterpreter.class.getDeclaredFields();
+            for (Field thisField : theseFields) {
+                if (!thisField.getType().equals(fieldToSet.getType())) {
+                    continue;
+                }
+
+                thisField.setAccessible(true);
+                fieldToSet.set(executable, thisField.get(this));
+            }
+        }
+
     }
 }

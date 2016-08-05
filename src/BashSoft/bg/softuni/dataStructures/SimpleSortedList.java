@@ -1,4 +1,4 @@
-package BashSoft.bg.softuni.datStructures;
+package BashSoft.bg.softuni.dataStructures;
 
 import BashSoft.bg.softuni.contracts.SimpleOrderedBag;
 

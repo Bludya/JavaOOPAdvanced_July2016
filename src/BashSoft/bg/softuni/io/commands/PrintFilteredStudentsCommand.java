@@ -1,22 +1,21 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.Database;
-import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.OutputWriter;
 import BashSoft.bg.softuni.staticData.ExceptionMessages;
 
+@Alias("filter")
 public class PrintFilteredStudentsCommand extends Command {
 
+    @Inject
+    private Database repository;
+
     public PrintFilteredStudentsCommand(String input,
-                                        String[] data,
-                                        ContentComparer tester,
-                                        Database repository,
-                                        AsynchDownloader downloadManager,
-                                        DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                                        String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -43,13 +42,13 @@ public class PrintFilteredStudentsCommand extends Command {
         }
 
         if (takeQuantity.equals("all")) {
-            this.getRepository().filterAndTake(courseName, filter);
+            this.repository.filterAndTake(courseName, filter);
             return;
         }
 
         try {
             int studentsToTake = Integer.parseInt(takeQuantity);
-            this.getRepository().filterAndTake(courseName, filter, studentsToTake);
+            this.repository.filterAndTake(courseName, filter, studentsToTake);
         } catch (NumberFormatException nfe) {
             OutputWriter.displayException(ExceptionMessages.IVALID_TAKE_QUANTITY_PARAMETER);
         }

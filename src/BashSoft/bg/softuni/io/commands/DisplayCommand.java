@@ -1,7 +1,12 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.*;
-import BashSoft.bg.softuni.datStructures.SimpleSortedList;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
+import BashSoft.bg.softuni.contracts.Course;
+import BashSoft.bg.softuni.contracts.Database;
+import BashSoft.bg.softuni.contracts.Executable;
+import BashSoft.bg.softuni.contracts.Student;
+import BashSoft.bg.softuni.dataStructures.SimpleSortedList;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.OutputWriter;
 
@@ -11,19 +16,16 @@ import java.util.Comparator;
  * Created by bludya on 7/21/16.
  * All rights reserved!
  */
+
+@Alias("display")
 public class DisplayCommand extends Command implements Executable {
+
+    @Inject
+    private Database repository;
+
     public DisplayCommand(String input,
-                          String[] data,
-                          ContentComparer tester,
-                          Database repository,
-                          AsynchDownloader downloadManager,
-                          DirectoryManager ioManager) {
-        super(input,
-                data,
-                tester,
-                repository,
-                downloadManager,
-                ioManager);
+                          String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -39,14 +41,14 @@ public class DisplayCommand extends Command implements Executable {
             Comparator<Student> studentComparator =
                     this.createStudentComparator(sortType);
             SimpleSortedList<Student> list =
-                    this.getRepository().getAllStudentsSorted(studentComparator);
+                    this.repository.getAllStudentsSorted(studentComparator);
             OutputWriter.writeMessageOnNewLine(
                     list.joinWith(System.lineSeparator()));
         } else if (entityToDisplay.equalsIgnoreCase("courses")) {
             Comparator<Course> courseComparator =
                     this.createCourseComparator(sortType);
             SimpleSortedList<Course> list =
-                    this.getRepository().getAllCoursesSorted(courseComparator);
+                    this.repository.getAllCoursesSorted(courseComparator);
             OutputWriter.writeMessageOnNewLine(
                     list.joinWith(System.lineSeparator()));
         } else {

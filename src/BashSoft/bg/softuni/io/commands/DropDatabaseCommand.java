@@ -1,21 +1,20 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.Database;
-import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 import BashSoft.bg.softuni.io.OutputWriter;
 
+@Alias("dropdb")
 public class DropDatabaseCommand extends Command {
 
+    @Inject
+    private Database repository;
+
     public DropDatabaseCommand(String input,
-                               String[] data,
-                               ContentComparer tester,
-                               Database repository,
-                               AsynchDownloader downloadManager,
-                               DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                               String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,7 +24,7 @@ public class DropDatabaseCommand extends Command {
             throw new InvalidInputException(this.getInput());
         }
 
-        this.getRepository().unloadData();
+        this.repository.unloadData();
         OutputWriter.writeMessageOnNewLine("Database dropped!");
     }
 }

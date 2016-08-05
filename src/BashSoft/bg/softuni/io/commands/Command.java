@@ -1,44 +1,16 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.*;
+import BashSoft.bg.softuni.contracts.Executable;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 
 public abstract class Command implements Executable {
     private String input;
     private String[] data;
-    private Database repository;
-    private ContentComparer tester;
-    private DirectoryManager ioManager;
-    private AsynchDownloader downloadManager;
 
     protected Command(String input,
-                      String[] data,
-                      ContentComparer tester,
-                      Database repository,
-                      AsynchDownloader downloadManager,
-                      DirectoryManager ioManager) {
+                      String[] data) {
         this.setInput(input);
         this.setData(data);
-        this.tester = tester;
-        this.repository = repository;
-        this.downloadManager = downloadManager;
-        this.ioManager = ioManager;
-    }
-
-    protected Database getRepository() {
-        return repository;
-    }
-
-    protected ContentComparer getTester() {
-        return tester;
-    }
-
-    protected DirectoryManager getIoManager() {
-        return ioManager;
-    }
-
-    protected AsynchDownloader getDownloadManager() {
-        return downloadManager;
     }
 
     protected String getInput() {
@@ -64,6 +36,4 @@ public abstract class Command implements Executable {
     }
 
     public abstract void execute() throws Exception;
-
-
 }

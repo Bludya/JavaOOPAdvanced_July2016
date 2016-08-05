@@ -1,20 +1,19 @@
 package BashSoft.bg.softuni.io.commands;
 
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
-import BashSoft.bg.softuni.contracts.Database;
-import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 
+@Alias("downloadasynch")
 public class DownloadAsynchCommand extends Command {
 
+    @Inject
+    private AsynchDownloader downloadManager;
+
     public DownloadAsynchCommand(String input,
-                                 String[] data,
-                                 ContentComparer tester,
-                                 Database repository,
-                                 AsynchDownloader downloadManager,
-                                 DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                                 String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,6 +24,6 @@ public class DownloadAsynchCommand extends Command {
         }
 
         String fileUrl = data[1];
-        this.getDownloadManager().downloadOnNewThread(fileUrl);
+        this.downloadManager.downloadOnNewThread(fileUrl);
     }
 }

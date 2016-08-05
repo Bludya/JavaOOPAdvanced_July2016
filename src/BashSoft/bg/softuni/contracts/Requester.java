@@ -1,6 +1,6 @@
 package BashSoft.bg.softuni.contracts;
 
-import BashSoft.bg.softuni.datStructures.SimpleSortedList;
+import BashSoft.bg.softuni.dataStructures.SimpleSortedList;
 
 import java.util.Comparator;
 

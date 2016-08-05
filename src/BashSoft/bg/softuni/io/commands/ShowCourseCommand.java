@@ -1,20 +1,19 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.contracts.Database;
-import BashSoft.bg.softuni.contracts.DirectoryManager;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
 
+@Alias("show")
 public class ShowCourseCommand extends Command {
 
+    @Inject
+    private Database repository;
+
     public ShowCourseCommand(String input,
-                             String[] data,
-                             ContentComparer tester,
-                             Database repository,
-                             AsynchDownloader downloadManager,
-                             DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                             String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -26,13 +25,13 @@ public class ShowCourseCommand extends Command {
 
         if (data.length == 2) {
             String courseName = data[1];
-            this.getRepository().getStudentsByCourse(courseName);
+            this.repository.getStudentsByCourse(courseName);
             return;
         }
 
         String courseName = data[1];
         String userName = data[2];
-        this.getRepository().getStudentMarkInCourse(courseName, userName);
+        this.repository.getStudentMarkInCourse(courseName, userName);
 
     }
 }

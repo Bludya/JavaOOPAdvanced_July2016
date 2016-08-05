@@ -1,20 +1,19 @@
 package BashSoft.bg.softuni.io.commands;
 
-import BashSoft.bg.softuni.contracts.AsynchDownloader;
-import BashSoft.bg.softuni.contracts.ContentComparer;
-import BashSoft.bg.softuni.contracts.Database;
-import BashSoft.bg.softuni.contracts.DirectoryManager;
+import BashSoft.bg.softuni.annotations.Alias;
+import BashSoft.bg.softuni.annotations.Inject;
 import BashSoft.bg.softuni.exceptions.InvalidInputException;
+import BashSoft.bg.softuni.judge.Tester;
 
+@Alias("cmp")
 public class CompareFilesCommand extends Command {
 
+    @Inject
+    private Tester tester;
+
     public CompareFilesCommand(String input,
-                               String[] data,
-                               ContentComparer tester,
-                               Database repository,
-                               AsynchDownloader downloadManager,
-                               DirectoryManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                               String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -26,6 +25,6 @@ public class CompareFilesCommand extends Command {
 
         String firstPath = data[1];
         String secondPath = data[2];
-        this.getTester().compareContent(firstPath, secondPath);
+        this.tester.compareContent(firstPath, secondPath);
     }
 }
